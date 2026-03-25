@@ -22,6 +22,17 @@ resource "aws_iam_user_policy" "cloudwatch_read" {
         ]
         Effect   = "Allow"
         Resource = "*"
+      },
+      # Statement 2: New Metrics Access (The "Missing Link")
+      {
+        Action = [
+          "cloudwatch:DescribeAlarmsForMetric",
+          "cloudwatch:ListMetrics",      # This solves your 403 error
+          "cloudwatch:GetMetricData",
+          "cloudwatch:GetMetricStatistics"
+        ]
+        Effect   = "Allow"
+        Resource = "*"
       }
     ]
   })
